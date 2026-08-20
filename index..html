@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <title>Naveen & Divya - Wedding Invitation</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Petit+Formal+Script&family=Dancing+Script:wght@400;500;600;700&family=Tangerine:wght@400;700&family=Alex+Brush&family=Parisienne&family=Meie+Script&family=Italianno&family=Libre+Baskerville:ital@0;1&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ========== RESET & BASE ========== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Cormorant Garamond', serif;
+            background: #1a1410;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .invitation-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            background: #f5efe6;
+        }
+
+        /* ========== PAGES ========== */
+        .page {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            height: 100vh;
+            height: 100dvh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            pointer-events: none;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            scroll-behavior: smooth;
+            opacity: 0;
+            transform: scale(0.95) translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform, opacity;
+        }
+
+        .page::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+        .page {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .page.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+            z-index: 10;
+        }
+
+        /* ========== PAGE BACKGROUNDS ========== */
+        #page1 {
+            background-image: url('images/envelope-bg.jpg');
+            background-color: #f5ede0;
+        }
+        #page2 {
+            background-image: url('images/temple.jpg');
+            background-color: #f5efe6;
+        }
+        #page3,
+        #page4,
+        #page5 {
+            background-image: url('images/gold-floral.jpg');
+            background-color: #faf3eb;
+        }
+
+        .page::before {
+            display: none;
+        }
+        .page>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================================ */
+        /* PAGE 1 – ENVELOPE                                            */
+        /* ============================================================ */
+        .envelope-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            max-width: 380px;
+            padding: 10px 18px 18px;
+            pointer-events: none;
+            background: transparent;
+        }
+        .envelope-wrapper>* {
+            pointer-events: auto;
+        }
+
+        .envelope-flap {
+            width: 50%;
+            max-width: 180px;
+            height: 10px;
+            background: linear-gradient(180deg, #e8dccc, transparent);
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+            opacity: 0.12;
+            margin-bottom: 8px;
+        }
+
+        /* ===== PURE CSS HEART SEAL (Wax Stamp Style) ===== */
+        .heart-seal-click {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            left: 50%;
+            right: 50%;
+            top: 75px;
+            transform: translate(-50%, -50%);
+            margin: 0;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            cursor: pointer;
+            z-index: 20;
+            display: block;
+            min-width: 80px;
+            min-height: 80px;
+        }
+
+        /* Center symbol */
+        .seal-symbol {
+            position: absolute;
+            z-index: 10;
+            color: #fff5dc;
+            font-size: clamp(18px, 4vw, 28px);
+            pointer-events: none;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hover effect */
+        .heart-seal-click:hover {
+            transform: scale(2.03);
+        }
+        .heart-seal-click:hover .heart {
+            box-shadow: 0 12px 35px rgba(155, 28, 49, 0.40);
+        }
+        .heart-seal-click:active {
+            transform: scale(1.95);
+        }
+
+        /* OPEN / BREAK STATE */
+        .heart-seal-click.open .heart {
+            transform: rotate(-45deg) scale(0.7);
+            opacity: 0.6;
+        }
+        .heart-seal-click.open .seal-ring {
+            transform: scale(1.5);
+            opacity: 0;
+        }
+        .heart-seal-click.open .seal-symbol {
+            transform: scale(0.3);
+            opacity: 0;
+        }
+
+        /* Hint text (always visible, below the seal) – user's modifications */
+        .heart-seal-hint {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.35rem, 0.9vw, 0.5rem);
+            color: #a8863a;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 1;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            white-space: nowrap;
+            pointer-events: none;
+            background: rgba(245, 239, 230, 0.5);
+            padding: 5px 12px;
+            border-radius: 16px;
+            border: 1px solid rgba(168, 134, 58, 0.05);
+        }
+        .heart-seal-click:hover .heart-seal-hint {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        /* ===== CLICK HERE TEXT ===== */
+        .click-here-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.55rem, 1.2vw, 0.75rem);
+            color: #a8863a;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
+            margin-top: 6px;
+            margin-bottom: 4px;
+            opacity: 0.7;
+            animation: pulseText 2s ease-in-out infinite;
+            pointer-events: none;
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes pulseText {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        .click-here-text .arrow {
+            display: inline-block;
+            animation: bounceArrow 1.5s ease-in-out infinite;
+        }
+        @keyframes bounceArrow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(4px); }
+        }
+
+        /* ===== NAMES – Stacked below heart ===== */
+        .names-envelope {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            font-size: clamp(1.1rem, 3.2vw, 1.8rem);
+            color: #3d2c1b;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 450px;
+            position: relative;
+            left: auto;
+            top: auto;
+            transform: none;
+            z-index: 2;
+        }
+        .names-envelope .groom-e {
+            font-family: "Great Vibes", cursive;
+            font-size: clamp(1.5rem, 4vw, 2.0rem);
+            font-weight: 500;
+            color: #2d1f0e;
+            letter-spacing: 1px;
+            display: block;
+        }
+        .names-envelope .bride-e {
+            font-family: "Great Vibes", cursive;
+            font-size: clamp(1.5rem, 4vw, 2.0rem);
+            font-weight: 500;
+            color: #7a5d3a;
+            display: block;
+        }
+
+        /* ===== INVITATION TEXT ===== */
+        .invite-text-env {
+            font-family: 'Petit Formal Script', cursive;
+            font-size: clamp(0.55rem, 1.5vw, 0.85rem);
+            color: #6b5a3e;
+            letter-spacing: 1.5px;
+            margin-top: 8px;
+            opacity: 0.8;
+            border-top: 1px solid rgba(168, 134, 58, 0.08);
+            padding-top: 8px;
+            width: 75%;
+            text-align: center;
+            margin-top: 10px;
+            transform: none;
+        }
+
+        /* ============================================================ */
+        /* REFINED TEXT ANIMATIONS                                      */
+        /* ============================================================ */
+        .animate-text {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform, opacity;
+        }
+        .page.active .animate-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .stagger-container .animate-text:nth-child(1) { transition-delay: 0.1s; }
+        .stagger-container .animate-text:nth-child(2) { transition-delay: 0.2s; }
+        .stagger-container .animate-text:nth-child(3) { transition-delay: 0.3s; }
+        .stagger-container .animate-text:nth-child(4) { transition-delay: 0.4s; }
+        .stagger-container .animate-text:nth-child(5) { transition-delay: 0.5s; }
+        .stagger-container .animate-text:nth-child(6) { transition-delay: 0.6s; }
+        .stagger-container .animate-text:nth-child(7) { transition-delay: 0.7s; }
+        .stagger-container .animate-text:nth-child(8) { transition-delay: 0.8s; }
+        .stagger-container .animate-text:nth-child(9) { transition-delay: 0.9s; }
+        .stagger-container .animate-text:nth-child(10) { transition-delay: 1.0s; }
+        .couple-details .detail-block .animate-text { transition-delay: 0.4s; }
+        .couple-details .divider-and.animate-text { transition-delay: 0.5s; }
+
+        /* ============================================================ */
+        /* PAGES 2–4 – CONTENT                                         */
+        /* ============================================================ */
+        .page-content {
+            width: 100%;
+            max-width: 440px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 0;
+            text-align: center;
+        }
+
+        .quote-sacred {
+            font-family: 'Parisienne', cursive;
+            font-size: clamp(0.85rem, 2.4vw, 1.3rem);
+            color: #5a4730;
+            text-align: center;
+            max-width: 480px;
+            margin: 2px auto 8px;
+            line-height: 1.6;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            padding: 0 6px;
+        }
+
+        .names-p2 {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .names-p2 .groom-p2 {
+            display: block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            font-weight: 600;
+            color: #2d1f0e;
+            letter-spacing: 1.5px;
+            margin: 0 0 4px 0;
+            padding: 0;
+            position: relative;
+            z-index: 11;
+        }
+        .names-p2 .weds-text {
+            display: block;
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 400;
+            color: #a8863a;
+            margin: 0 0 5px 0;
+            padding: 0;
+            position: relative;
+            z-index: 11;
+        }
+        .names-p2 .bride-p2 {
+            display: block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            font-weight: 600;
+            color: #7a5d3a;
+            letter-spacing: 1.5px;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            z-index: 11;
+        }
+        .names-p2,
+        .names-p2 .groom-p2,
+        .names-p2 .weds-text,
+        .names-p2 .bride-p2 {
+            position: relative !important;
+            top: auto !important;
+            left: auto !important;
+            right: auto !important;
+            bottom: auto !important;
+            transform: none !important;
+        }
+
+        .countdown-section {
+            text-align: center;
+            margin: 4px 0 10px;
+            padding: 8px 16px;
+            background: rgba(255, 248, 235, 0.60);
+            backdrop-filter: blur(4px);
+            border-radius: 30px;
+            border: 1px solid rgba(212, 175, 55, 0.10);
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .countdown-grid {
+            display: flex;
+            gap: 6px 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .countdown-item {
+            text-align: center;
+        }
+        .countdown-item .num {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: clamp(0.95rem, 2.6vw, 1.5rem);
+            color: #3d2c1b;
+            line-height: 1;
+            min-width: 26px;
+            display: block;
+        }
+        .countdown-item .lbl {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.45rem;
+            letter-spacing: 2px;
+            color: #8a7a64;
+            text-transform: uppercase;
+            margin-top: 1px;
+        }
+        .countdown-sep {
+            font-family: 'Playfair Display', serif;
+            color: #b8954a;
+            font-size: 0.9rem;
+            opacity: 0.20;
+            align-self: center;
+            line-height: 1;
+            margin-top: -2px;
+        }
+
+        .ornament {
+            text-align: center;
+            font-size: 0.6rem;
+            color: #b8954a;
+            opacity: 0.20;
+            letter-spacing: 5px;
+            margin: 2px 0;
+        }
+
+        /* ============================================================ */
+        /* PAGE 3 – FAMILY BLESSINGS                                    */
+        /* ============================================================ */
+        .family-section {
+            text-align: center;
+            padding: 12px 6px 10px;
+            margin: 2px 0 8px;
+            border-top: 1px solid rgba(168, 134, 58, 0.10);
+            border-bottom: 1px solid rgba(168, 134, 58, 0.10);
+            width: 100%;
+        }
+        .family-section .blessing-title {
+            font-family: 'Cinzel', serif;
+            font-weight: 400;
+            font-size: clamp(0.75rem, 2vw, 1.1rem);
+            color: #6b5a3e;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+        .family-section .floral-deco {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.3rem;
+            color: #b8954a;
+            opacity: 0.28;
+            letter-spacing: 10px;
+            margin: 2px 0 6px;
+        }
+        .family-section .joyful-quote {
+            font-family: 'Petit Formal Script', cursive;
+            font-size: clamp(0.85rem, 2.2vw, 1.2rem);
+            color: #5a4730;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .couple-details {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 4px 16px;
+            flex-wrap: wrap;
+            margin: 4px 0 6px;
+            width: 100%;
+        }
+        .detail-block {
+            flex: 1 1 150px;
+            min-width: 120px;
+            padding: 6px 4px;
+        }
+        .detail-block .role {
+            font-family: 'Cinzel', serif;
+            font-size: 0.5rem;
+            letter-spacing: 4px;
+            color: #a8863a;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 2px;
+        }
+        .detail-block .name-detail {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(0.9rem, 2.4vw, 1.3rem);
+            font-weight: 600;
+            color: #3d2c1b;
+            line-height: 1.2;
+        }
+        .detail-block .parents {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.65rem, 1.6vw, 0.9rem);
+            color: #6b5a3e;
+            font-style: italic;
+            letter-spacing: 0.3px;
+            margin-top: 2px;
+            line-height: 1.3;
+        }
+        .detail-block .parents .and-parent {
+            font-family: 'Great Vibes', cursive;
+            font-size: 0.75rem;
+            color: #a8863a;
+            margin: 0 2px;
+        }
+        .couple-details .divider-and {
+            font-family: 'Meie Script', cursive;
+            font-size: clamp(1.4rem, 3.6vw, 2.4rem);
+            color: #b8954a;
+            padding: 0 2px;
+            opacity: 0.5;
+            transform: translateY(-2px);
+        }
+
+        /* ============================================================ */
+        /* PAGE 4 – WEDDING DETAILS                                     */
+        /* ============================================================ */
+        .detail-title {
+            font-family: 'Cinzel', serif;
+            font-weight: 400;
+            font-size: clamp(0.85rem, 2.2vw, 1.3rem);
+            color: #3d2c1b;
+            text-align: center;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .detail-title .gold {
+            color: #a8863a;
+            font-weight: 600;
+        }
+
+        .detail-date {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1rem, 2.8vw, 1.7rem);
+            font-weight: 600;
+            color: #3d2c1b;
+            text-align: center;
+            letter-spacing: 1px;
+            margin: 2px 0 4px;
+        }
+        .detail-date .day-name {
+            color: #a8863a;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .calendar-wrap {
+            max-width: 320px;
+            width: 100%;
+            margin: 6px auto 10px;
+            background: rgba(255, 248, 235, 0.55);
+            backdrop-filter: blur(4px);
+            border-radius: 14px;
+            padding: 10px 8px 8px;
+            border: 1px solid rgba(212, 175, 55, 0.06);
+        }
+        .calendar-wrap .cal-month {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 4px;
+            color: #6b5a3e;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .calendar-grid .cal-day-header {
+            font-size: 0.45rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8a7a64;
+            padding: 3px 0;
+            font-weight: 500;
+            text-align: center;
+        }
+        .calendar-grid .cal-day {
+            font-size: clamp(0.55rem, 1.3vw, 0.75rem);
+            padding: 4px 0;
+            border-radius: 50%;
+            color: #5a4730;
+            text-align: center;
+            font-weight: 400;
+            transition: background 0.2s;
+            position: relative;
+        }
+        .calendar-grid .cal-day.highlight {
+            background: radial-gradient(circle at 30% 30%, #f5d78a, #c99f3e);
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 3px 12px rgba(201, 159, 62, 0.25);
+            transform: scale(1.06);
+        }
+        .calendar-grid .cal-day.heart-day::after {
+            content: '♥';
+            position: absolute;
+            top: -6px;
+            right: -4px;
+            font-size: clamp(0.45rem, 1.1vw, 0.65rem);
+            color: #c0392b;
+            opacity: 0.7;
+        }
+        .calendar-grid .cal-day.blank {
+            opacity: 0.15;
+        }
+
+        .time-detail {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.75rem, 1.8vw, 1rem);
+            color: #5a4730;
+            text-align: center;
+            letter-spacing: 0.5px;
+            margin: 2px 0 6px;
+            line-height: 1.5;
+        }
+        .time-detail .time-bold {
+            font-weight: 600;
+            color: #a8863a;
+        }
+        .time-detail .reception {
+            font-style: italic;
+            color: #8a7a64;
+            font-size: 0.85em;
+        }
+
+        .wedding-quote {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(0.8rem, 2vw, 1.15rem);
+            color: #6b5a3e;
+            text-align: center;
+            max-width: 450px;
+            margin: 4px auto 2px;
+            line-height: 1.4;
+            opacity: 0.75;
+            letter-spacing: 0.3px;
+        }
+
+        /* ============================================================ */
+        /* PAGE 5 – VENUE                                               */
+        /* ============================================================ */
+        #page5 {
+            justify-content: flex-start;
+            padding-top: 120px;
+        }
+        #page5 .page-content {
+            justify-content: flex-start;
+        }
+
+        .venue-heading {
+            font-family: 'Cinzel', serif;
+            font-weight: 400;
+            font-size: clamp(0.85rem, 2.2vw, 1.3rem);
+            color: #3d2c1b;
+            text-align: center;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .venue-heading .gold {
+            color: #a8863a;
+            font-weight: 600;
+        }
+
+        .venue-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1rem, 2.8vw, 1.6rem);
+            font-weight: 700;
+            color: #3d2c1b;
+            text-align: center;
+            letter-spacing: 0.5px;
+            margin-bottom: 1px;
+        }
+        .venue-title .sub-loc {
+            font-weight: 400;
+            color: #6b5a3e;
+            font-size: clamp(0.75rem, 1.8vw, 1rem);
+            display: block;
+            margin-top: 1px;
+            letter-spacing: 2px;
+        }
+
+        .map-container {
+            width: 100%;
+            max-width: 360px;
+            margin: 8px auto 10px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 24px rgba(60, 40, 20, 0.10);
+            border: 2px solid rgba(212, 175, 55, 0.10);
+            aspect-ratio: 16/10;
+            background: #ddd0bc;
+            transition: transform 0.3s ease;
+        }
+        .map-container:hover {
+            transform: scale(1.01);
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+
+        .map-link {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.6rem, 1.6vw, 0.8rem);
+            color: #a8863a;
+            text-decoration: none;
+            border-bottom: 1px dashed rgba(168, 134, 58, 0.25);
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-top: 2px;
+            padding-bottom: 2px;
+            transition: all 0.3s ease;
+        }
+        .map-link:hover {
+            color: #b8954a;
+            border-bottom-color: #b8954a;
+        }
+
+        .welcome-quotes {
+            text-align: center;
+            padding: 8px 6px 4px;
+            margin-top: 4px;
+            border-top: 1px solid rgba(168, 134, 58, 0.08);
+            width: 100%;
+        }
+        .welcome-quotes .wq {
+            font-family: 'Italianno', cursive;
+            font-size: clamp(1rem, 2.8vw, 1.6rem);
+            color: #6b5a3e;
+            line-height: 1.4;
+            letter-spacing: 0.5px;
+            opacity: 0.7;
+            margin: 1px 0;
+        }
+        .welcome-quotes .wq .highlight-gold {
+            color: #b8954a;
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(1.1rem, 3.2vw, 1.8rem);
+        }
+
+        .final-blessing {
+            font-family: 'Tangerine', cursive;
+            font-size: clamp(1.2rem, 3.4vw, 2rem);
+            color: #a8863a;
+            text-align: center;
+            margin: 6px 0 2px;
+            opacity: 0.6;
+            letter-spacing: 2px;
+        }
+
+        /* ========== NAVIGATION BUTTONS ========== */
+        .nav-btn {
+            display: inline-block;
+            margin: 8px auto 4px;
+            padding: 12px 32px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #f5ede0;
+            background: linear-gradient(145deg, #b8954a, #a07d35);
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(168, 134, 58, 0.20);
+            position: relative;
+            overflow: hidden;
+            min-height: 44px;
+            min-width: 44px;
+            touch-action: manipulation;
+        }
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px rgba(168, 134, 58, 0.30);
+        }
+        .nav-btn:active {
+            transform: translateY(0px);
+        }
+        .nav-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+        .nav-btn:hover::after {
+            transform: translateX(100%);
+        }
+
+        .nav-btn.secondary {
+            background: transparent;
+            color: #a8863a;
+            box-shadow: 0 0 0 1px #a8863a;
+            background: rgba(255, 248, 235, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        .nav-btn.secondary:hover {
+            background: rgba(168, 134, 58, 0.06);
+            box-shadow: 0 0 0 1px #a8863a, 0 4px 14px rgba(168, 134, 58, 0.12);
+        }
+
+        .btn-center {
+            text-align: center;
+            width: 100%;
+        }
+
+        /* ========== PAGE DOTS ========== */
+        .page-dots {
+            position: absolute;
+            bottom: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 20;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .page-dots.visible {
+            opacity: 1;
+        }
+        .page-dots .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(168, 134, 58, 0.25);
+            transition: all 0.4s ease;
+        }
+        .page-dots .dot.active {
+            background: #a8863a;
+            transform: scale(1.4);
+            box-shadow: 0 0 10px rgba(168, 134, 58, 0.25);
+        }
+
+        /* ========== MUSIC CONTROL ========== */
+        .music-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 248, 235, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(168, 134, 58, 0.25);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #a8863a;
+            transition: all 0.3s ease;
+            line-height: 1;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        .music-toggle:hover {
+            transform: scale(1.08);
+            background: rgba(255, 248, 235, 0.95);
+            border-color: #a8863a;
+            box-shadow: 0 4px 20px rgba(168, 134, 58, 0.20);
+        }
+        .music-toggle.playing {
+            color: #7a5d3a;
+        }
+        .music-toggle.pulse {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        /* ========== TAP TO START OVERLAY ========== */
+        .tap-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(26, 20, 16, 0.5);
+            backdrop-filter: blur(6px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #f5ede0;
+            font-family: 'Cormorant Garamond', serif;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+        .tap-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .tap-overlay .icon {
+            font-size: 4rem;
+            margin-bottom: 12px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        .tap-overlay .text {
+            font-size: clamp(1.4rem, 5vw, 2.4rem);
+            letter-spacing: 4px;
+            font-weight: 300;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+        }
+        .tap-overlay .sub {
+            font-size: clamp(0.8rem, 2.5vw, 1.2rem);
+            opacity: 0.7;
+            margin-top: 8px;
+        }
+
+        /* ========== MOBILE-FRIENDLY OVERRIDES ========== */
+        @media (max-width: 480px) {
+            .envelope-wrapper {
+                max-width: 90vw;
+                padding: 10px 8px 12px;
+            }
+            .heart-seal-click {
+                width: clamp(90px, 30vw, 140px);
+                height: clamp(90px, 30vw, 140px);
+                top: 50px;
+                min-width: 70px;
+                min-height: 70px;
+            }
+            .names-envelope {
+                margin-top: 100px !important;
+            }
+            .names-envelope .groom-e,
+            .names-envelope .bride-e {
+                font-size: clamp(1.2rem, 5.5vw, 1.8rem);
+            }
+            .invite-text-env {
+                font-size: clamp(0.5rem, 2.2vw, 0.7rem);
+                width: 85%;
+            }
+            #page5 {
+                padding-top: 80px;
+            }
+            .page-content {
+                max-width: 100%;
+                padding: 0 12px;
+            }
+            .map-container {
+                max-width: 100%;
+            }
+            .calendar-wrap {
+                max-width: 100%;
+            }
+            .couple-details {
+                flex-direction: column;
+                gap: 6px;
+            }
+            .couple-details .divider-and {
+                transform: rotate(90deg);
+                font-size: 1.8rem;
+            }
+            .detail-block {
+                min-width: auto;
+                width: 100%;
+            }
+            .nav-btn {
+                padding: 12px 24px;
+                font-size: 0.55rem;
+                min-height: 48px;
+            }
+            .page-dots {
+                gap: 6px;
+                bottom: 10px;
+            }
+            .page-dots .dot {
+                width: 8px;
+                height: 8px;
+            }
+            .music-toggle {
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+                top: 12px;
+                right: 12px;
+            }
+            .tap-overlay .icon {
+                font-size: 3rem;
+            }
+            .tap-overlay .text {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .heart-seal-click {
+                top: 30px;
+                width: 80px;
+                height: 80px;
+            }
+            .names-envelope {
+                margin-top: 70px !important;
+            }
+            .names-envelope .groom-e,
+            .names-envelope .bride-e {
+                font-size: 1rem;
+            }
+            .invite-text-env {
+                font-size: 0.45rem;
+            }
+            #page5 {
+                padding-top: 60px;
+            }
+            .quote-sacred {
+                font-size: 0.7rem;
+            }
+            .names-p2 .groom-p2,
+            .names-p2 .bride-p2 {
+                font-size: 1.5rem;
+            }
+            .names-p2 .weds-text {
+                font-size: 1.2rem;
+            }
+            .countdown-item .num {
+                font-size: 0.8rem;
+                min-width: 18px;
+            }
+            .detail-date {
+                font-size: 0.9rem;
+            }
+            .venue-title {
+                font-size: 0.9rem;
+            }
+            .map-container {
+                max-width: 100%;
+            }
+        }
+
+        /* taller screens get more top space */
+        @media (min-height: 800px) {
+            .heart-seal-click {
+                top: 100px;
+            }
+            .names-envelope {
+                margin-top: 500px !important;
+            }
+            #page5 {
+                padding-top: 160px;
+            }
+        }
+
+        @media (min-height: 900px) {
+            .heart-seal-click {
+                top: 130px;
+            }
+            .names-envelope {
+                margin-top: 550px !important;
+            }
+            #page5 {
+                padding-top: 200px;
+            }
+        }
+
+        /* For very small height screens */
+        @media (max-height: 700px) {
+            .heart-seal-click {
+                top: 40px;
+                width: 90px;
+                height: 90px;
+            }
+            .names-envelope {
+                margin-top: 80px !important;
+            }
+            .names-envelope .groom-e,
+            .names-envelope .bride-e {
+                font-size: 1.1rem;
+            }
+            .invite-text-env {
+                font-size: 0.45rem;
+                margin-top: 4px;
+                padding-top: 4px;
+            }
+            #page5 {
+                padding-top: 60px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .heart-seal-click {
+                top: 20px;
+                width: 70px;
+                height: 70px;
+            }
+            .names-envelope {
+                margin-top: 60px !important;
+            }
+            .names-envelope .groom-e,
+            .names-envelope .bride-e {
+                font-size: 0.9rem;
+            }
+            .invite-text-env {
+                font-size: 0.35rem;
+            }
+            #page5 {
+                padding-top: 40px;
+            }
+        }
+
+        /* ensure heart seal is tappable on all sizes */
+        .heart-seal-click {
+            touch-action: manipulation;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TAP TO START OVERLAY (hidden by default) -->
+    <div id="tapOverlay" class="tap-overlay">
+        <div class="icon">♫</div>
+        <div class="text">Tap to start</div>
+        <div class="sub">~ music will play ~</div>
+    </div>
+
+    <div class="invitation-container" id="app">
+
+        <!-- ============================================================ -->
+        <!-- PAGE 1 – ENVELOPE                                             -->
+        <!-- ============================================================ -->
+        <div class="page active" id="page1" data-page="1">
+
+            <div class="envelope-wrapper">
+
+                <div class="envelope-flap"></div>
+
+                <!-- Pure CSS Heart Seal -->
+                <div 
+                    id="heartSeal" 
+                    class="heart-seal-click"
+                    tabindex="0"
+                    role="button"
+                    aria-label="Open invitation">
+                </div>
+
+                <!-- ===== CLICK HERE TEXT ===== -->
+                <div class="click-here-text">
+                    <span class="arrow">👇</span> Click here <span class="arrow">👇</span>
+                </div>
+
+                <!-- NAMES – BELOW THE HEART SEAL -->
+                <div class="names-envelope stagger-container" id="namesEnv1">
+                    <span class="groom-e animate-text">Naveen Prabhu</span>
+                    <span class="and-e">&amp;</span>
+                    <span class="bride-e animate-text">Divya Dharshini</span>
+                </div>
+
+                <!-- INVITATION TEXT – BELOW THE NAMES -->
+                <div class="invite-text-env" id="inviteText1">
+                    <span class="animate-text">“Cordially invite you to celebrate our wedding.”</span>
+                </div>
+
+            </div>
+
+            <div class="page-dots" id="dots1">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- PAGE 2 – TEMPLE WELCOME                                      -->
+        <!-- ============================================================ -->
+        <div class="page" id="page2" data-page="2">
+            <div class="page-content">
+
+                <div class="quote-sacred stagger-container" id="quoteSacred">
+                    <span class="animate-text">Three</span>
+                    <span class="animate-text">sacred</span>
+                    <span class="animate-text">knots,</span>
+                    <span class="animate-text">one</span>
+                    <span class="animate-text">for</span>
+                    <span class="animate-text">love,</span>
+                    <span class="animate-text">one</span>
+                    <span class="animate-text">for</span>
+                    <span class="animate-text">trust,</span>
+                    <span class="animate-text">and</span>
+                    <span class="animate-text">one</span>
+                    <span class="animate-text">for</span>
+                    <span class="animate-text">a</span>
+                    <span class="animate-text">lifetime</span>
+                    <span class="animate-text">of</span>
+                    <span class="animate-text">togetherness.</span>
+                </div>
+
+                <div class="names-p2 stagger-container" id="namesP2">
+                    <span class="groom-p2 animate-text">Naveen Prabhu</span>
+                    <span class="weds-text animate-text">weds</span>
+                    <span class="bride-p2 animate-text">Divya Dharshini</span>
+                </div>
+
+                <div class="countdown-section" id="countdownSection">
+                    <div class="countdown-grid" id="countdown">
+                        <div class="countdown-item">
+                            <span class="num" id="days">00</span>
+                            <span class="lbl">Days</span>
+                        </div>
+                        <span class="countdown-sep">:</span>
+                        <div class="countdown-item">
+                            <span class="num" id="hours">00</span>
+                            <span class="lbl">Hrs</span>
+                        </div>
+                        <span class="countdown-sep">:</span>
+                        <div class="countdown-item">
+                            <span class="num" id="minutes">00</span>
+                            <span class="lbl">Mins</span>
+                        </div>
+                        <span class="countdown-sep">:</span>
+                        <div class="countdown-item">
+                            <span class="num" id="seconds">00</span>
+                            <span class="lbl">Secs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ornament">❧ ❧ ❧</div>
+
+                <div class="btn-center">
+                    <button class="nav-btn page-next" data-next="3">Family Blessings →</button>
+                </div>
+            </div>
+
+            <div class="page-dots" id="dots2">
+                <span class="dot"></span>
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- PAGE 3 – FAMILY BLESSINGS                                    -->
+        <!-- ============================================================ -->
+        <div class="page" id="page3" data-page="3">
+            <div class="page-content">
+
+                <div class="family-section" id="familySection">
+                    <div class="blessing-title animate-text">With the blessing of our families</div>
+                    <div class="floral-deco animate-text">✿ ✿ ✿</div>
+                    <div class="joyful-quote stagger-container" id="joyfulQuote">
+                        <span class="animate-text">"With</span>
+                        <span class="animate-text">joyful</span>
+                        <span class="animate-text">hearts,</span>
+                        <span class="animate-text">we</span>
+                        <span class="animate-text">invite</span>
+                        <span class="animate-text">you</span>
+                        <span class="animate-text">to</span>
+                        <span class="animate-text">celebrate</span>
+                        <span class="animate-text">our</span>
+                        <span class="animate-text">wedding"</span>
+                    </div>
+                </div>
+
+                <div class="couple-details" id="coupleDetails">
+                    <div class="detail-block">
+                        <div class="role animate-text">The Groom</div>
+                        <div class="name-detail animate-text">Naveen Prabhu</div>
+                        <div class="parents animate-text">beloved son of <br />Marimuthu <span class="and-parent">&amp;</span> Selvanayaki</div>
+                    </div>
+
+                    <div class="divider-and animate-text">&amp;</div>
+
+                    <div class="detail-block">
+                        <div class="role animate-text">The Bride</div>
+                        <div class="name-detail animate-text">Divya Dharshini</div>
+                        <div class="parents animate-text">beloved daughter of <br />Senthil Kumar <span class="and-parent">&amp;</span> Kokila</div>
+                    </div>
+                </div>
+
+                <div class="ornament">✦ ✦ ✦</div>
+
+                <div class="btn-center">
+                    <button class="nav-btn page-next" data-next="4">Wedding Details →</button>
+                </div>
+            </div>
+
+            <div class="page-dots" id="dots3">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- PAGE 4 – WEDDING DETAILS                                     -->
+        <!-- ============================================================ -->
+        <div class="page" id="page4" data-page="4">
+            <div class="page-content">
+
+                <div class="detail-title stagger-container" id="detailTitle">
+                    <span class="gold animate-text">✦</span>
+                    <span class="animate-text">Wedding</span>
+                    <span class="gold animate-text">✦</span>
+                </div>
+
+                <div class="detail-date stagger-container" id="detailDate">
+                    <span class="animate-text">20</span>
+                    <span class="animate-text">Nov</span>
+                    <span class="animate-text">2026</span>
+                    <span class="day-name animate-text">| Friday</span>
+                </div>
+
+                <div class="calendar-wrap" id="calendarWrap">
+                    <div class="cal-month">November 2026</div>
+                    <div class="calendar-grid" id="calendar"></div>
+                </div>
+
+                <div class="time-detail stagger-container" id="timeDetail">
+                    <span class="time-bold animate-text">04.30 am</span>
+                    <span class="animate-text">–</span>
+                    <span class="time-bold animate-text">05.30 am</span>
+                    <br />
+                    <span class="reception animate-text">✦ followed by Reception ✦</span>
+                </div>
+
+                <div class="wedding-quote stagger-container" id="weddingQuote">
+                    <span class="animate-text">“Let</span>
+                    <span class="animate-text">love</span>
+                    <span class="animate-text">be</span>
+                    <span class="animate-text">the</span>
+                    <span class="animate-text">melody</span>
+                    <span class="animate-text">that</span>
+                    <span class="animate-text">binds</span>
+                    <span class="animate-text">us</span>
+                    <span class="animate-text">forever.”</span>
+                </div>
+
+                <div class="ornament">❧ ❧ ❧</div>
+
+                <div class="btn-center">
+                    <button class="nav-btn page-next" data-next="5">Location →</button>
+                </div>
+            </div>
+
+            <div class="page-dots" id="dots4">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot active"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- PAGE 5 – VENUE                                               -->
+        <!-- ============================================================ -->
+        <div class="page" id="page5" data-page="5">
+            <div class="page-content">
+
+                <div class="venue-heading stagger-container" id="venueHeading">
+                    <span class="gold animate-text">✦</span>
+                    <span class="animate-text">Venue</span>
+                    <span class="gold animate-text">✦</span>
+                </div>
+
+                <div class="venue-title stagger-container" id="venueTitle">
+                    <span class="animate-text">KTP Kalaiyarangam</span>
+                    <span class="sub-loc animate-text">Naduvacheri</span>
+                </div>
+
+                <div class="map-container" id="mapContainer">
+                    <iframe
+                    src="https://www.google.com/maps?q=KTP+Kalaiyarangam,+Naduvacheri,+Tamil+Nadu+641654,+India&output=embed"
+                    allowfullscreen
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+
+            <div class="btn-center" style="margin-top:0px;">
+                <a href="https://maps.app.goo.gl/qUSMuBY14gr3sKkRA?g_st=aw" target="_blank" rel="noopener" class="map-link animate-text">
+                    📍 Open in Maps
+                </a>
+            </div>
+
+            <div class="welcome-quotes" id="welcomeQuotes">
+                <div class="wq stagger-container">
+                    <span class="animate-text">“Your</span>
+                    <span class="animate-text">presence</span>
+                    <span class="animate-text">is</span>
+                    <span class="animate-text">our</span>
+                    <span class="highlight-gold animate-text">present</span>
+                    <span class="animate-text">.”</span>
+                </div>
+                <div class="wq stagger-container">
+                    <span class="animate-text">“Come,</span>
+                    <span class="animate-text">shower</span>
+                    <span class="animate-text">us</span>
+                    <span class="animate-text">with</span>
+                    <span class="animate-text">your</span>
+                    <span class="highlight-gold animate-text">blessings</span>
+                    <span class="animate-text">.”</span>
+                </div>
+            </div>
+
+            <div class="final-blessing stagger-container" id="finalBlessing">
+                <span class="animate-text">✨</span>
+                <span class="animate-text">Welcome</span>
+                <span class="animate-text">✨</span>
+            </div>
+
+            <div class="ornament">❧ ❧ ❧</div>
+
+            <div class="btn-center">
+                <button class="nav-btn secondary" id="resetBtn">⟳ Start Over</button>
+            </div>
+        </div>
+
+        <div class="page-dots" id="dots5">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot active"></span>
+        </div>
+    </div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- MUSIC PLAYER & CONTROL                                        -->
+<!-- ============================================================ -->
+<audio id="bgMusic" src="music/wedding-music.mp3" loop preload="auto" playsinline></audio>
+
+<button id="musicToggle" class="music-toggle" aria-label="Toggle music">
+    <span id="musicIcon">♫</span>
+</button>
+
+<!-- ============================================================ -->
+<!-- JAVASCRIPT                                                    -->
+<!-- ============================================================ -->
+<script>
+    (function() {
+        'use strict';
+
+        // ---- Music Control ----
+        const audio = document.getElementById('bgMusic');
+        const toggleBtn = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
+        const overlay = document.getElementById('tapOverlay');
+
+        audio.volume = 0.3;
+
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                musicIcon.textContent = '♫';
+                toggleBtn.classList.remove('playing');
+                toggleBtn.classList.add('pulse');
+            } else {
+                audio.play().catch(() => {});
+                isPlaying = true;
+                musicIcon.textContent = '♪';
+                toggleBtn.classList.add('playing');
+                toggleBtn.classList.remove('pulse');
+            }
+        }
+
+        toggleBtn.addEventListener('click', toggleMusic);
+
+        // ---- Start music and hide overlay ----
+        function startMusicAndHideOverlay() {
+            if (!isPlaying) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    musicIcon.textContent = '♪';
+                    toggleBtn.classList.add('playing');
+                    toggleBtn.classList.remove('pulse');
+                    overlay.classList.remove('show');
+                }).catch(() => {});
+            } else {
+                overlay.classList.remove('show');
+            }
+        }
+
+        // ---- Show overlay if autoplay fails ----
+        function attemptAutoplay() {
+            audio.play().then(() => {
+                isPlaying = true;
+                musicIcon.textContent = '♪';
+                toggleBtn.classList.add('playing');
+                toggleBtn.classList.remove('pulse');
+                overlay.classList.remove('show');
+            }).catch(() => {
+                overlay.classList.add('show');
+                toggleBtn.classList.add('pulse');
+            });
+        }
+
+        // ---- Overlay click starts music ----
+        overlay.addEventListener('click', startMusicAndHideOverlay);
+
+        // ---- Also start on any document click if overlay is visible ----
+        document.addEventListener('click', function(e) {
+            if (overlay.classList.contains('show')) {
+                startMusicAndHideOverlay();
+            }
+        }, { once: false, passive: true });
+
+        // ---- Existing Page Logic ----
+        const pages = document.querySelectorAll('.page');
+        const heartSeal = document.getElementById('heartSeal');
+        const nextBtns = document.querySelectorAll('.page-next');
+        const resetBtn = document.getElementById('resetBtn');
+        const dotsContainers = document.querySelectorAll('.page-dots');
+
+        let currentPage = 1;
+        const totalPages = 5;
+
+        function goToPage(pageNum) {
+            if (pageNum < 1 || pageNum > totalPages) return;
+            if (pageNum === currentPage) return;
+
+            pages.forEach(p => {
+                p.classList.remove('active');
+            });
+
+            const target = document.getElementById('page' + pageNum);
+            if (target) {
+                void target.offsetHeight;
+                target.classList.add('active');
+            }
+
+            currentPage = pageNum;
+            updateDots(pageNum);
+            updateDotsVisibility(pageNum);
+
+            if (pageNum === 5 && isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                musicIcon.textContent = '♫';
+                toggleBtn.classList.remove('playing');
+                toggleBtn.classList.add('pulse');
+            }
+
+            if (pageNum === 1) {
+                heartSeal.classList.remove('open');
+            }
+        }
+
+        function updateDots(pageNum) {
+            dotsContainers.forEach((container) => {
+                const dots = container.querySelectorAll('.dot');
+                dots.forEach((dot, dIdx) => {
+                    dot.classList.toggle('active', dIdx === (pageNum - 1));
+                });
+            });
+        }
+
+        function updateDotsVisibility(pageNum) {
+            dotsContainers.forEach((container) => {
+                if (pageNum === 1) {
+                    container.classList.remove('visible');
+                } else {
+                    container.classList.add('visible');
+                }
+            });
+        }
+
+        // ---- Heart seal click ----
+        heartSeal.addEventListener("click", function(e) {
+            e.stopPropagation();
+            if (currentPage === 1) {
+                if (!isPlaying) {
+                    startMusicAndHideOverlay();
+                }
+                heartSeal.classList.add("open");
+                setTimeout(function() {
+                    goToPage(2);
+                }, 650);
+            }
+        });
+
+        heartSeal.addEventListener("keydown", function(e) {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                if (currentPage === 1) {
+                    if (!isPlaying) {
+                        startMusicAndHideOverlay();
+                    }
+                    heartSeal.classList.add("open");
+                    setTimeout(function() {
+                        goToPage(2);
+                    }, 650);
+                }
+            }
+        });
+
+        document.getElementById("page1").addEventListener("click", function(e) {
+            if (!e.target.closest("#heartSeal")) {
+                e.stopPropagation();
+            }
+        });
+
+        // ---- Next buttons ----
+        nextBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const next = parseInt(this.getAttribute('data-next'));
+                if (next && next <= totalPages) {
+                    goToPage(next);
+                }
+            });
+        });
+
+        // ---- Reset ----
+        resetBtn.addEventListener('click', function() {
+            goToPage(1);
+        });
+
+        // ---- Countdown ----
+        const targetDate = new Date('November 20, 2026 04:30:00').getTime();
+
+        function updateCountdown() {
+            const now = Date.now();
+            const diff = Math.max(0, targetDate - now);
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // ---- Calendar ----
+        function buildCalendar() {
+            const container = document.getElementById('calendar');
+            if (!container) return;
+
+            const year = 2026,
+                month = 10;
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            let html = '';
+            dayNames.forEach(name => {
+                html += `<div class="cal-day-header">${name}</div>`;
+            });
+
+            for (let i = 0; i < firstDay; i++) {
+                html += `<div class="cal-day blank"></div>`;
+            }
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const isWedding = (d === 20);
+                const heartClass = isWedding ? 'heart-day' : '';
+                html += `<div class="cal-day ${isWedding ? 'highlight' : ''} ${heartClass}">${d}</div>`;
+            }
+
+            container.innerHTML = html;
+        }
+        buildCalendar();
+
+        // ---- Init ----
+        function init() {
+            pages.forEach(p => p.classList.remove('active'));
+            document.getElementById('page1').classList.add('active');
+            currentPage = 1;
+            updateDots(1);
+            updateDotsVisibility(1);
+            heartSeal.classList.remove('open');
+
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                musicIcon.textContent = '♫';
+                toggleBtn.classList.remove('playing');
+            }
+
+            attemptAutoplay();
+        }
+
+        window.addEventListener('resize', function() {
+            // no-op
+        });
+
+        init();
+
+    })();
+</script>
+
+</body>
+</html>
